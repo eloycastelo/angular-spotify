@@ -62,7 +62,8 @@
                 "glob": "**/*",
                 "input": "libs/web/shared/assets/src/assets",
                 "output": "assets"
-              }
+              },
+              "apps/angular-spotify/src/manifest.webmanifest"
             ],
             "styles": ["apps/angular-spotify/src/styles.scss"],
             "scripts": []
@@ -97,7 +98,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/angular-spotify/ngsw-config.json"
             }
           }
         },
@@ -1480,6 +1483,56 @@
           "outputs": ["coverage/libs/web/album/data-access"],
           "options": {
             "jestConfig": "libs/web/album/data-access/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-visualizer-ui": {
+      "projectType": "library",
+      "root": "libs/web/visualizer/ui",
+      "sourceRoot": "libs/web/visualizer/ui/src",
+      "prefix": "angular-spotify",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/web/visualizer/ui/src/**/*.ts",
+              "libs/web/visualizer/ui/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/web/visualizer/ui"],
+          "options": {
+            "jestConfig": "libs/web/visualizer/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-album-ui-album-track": {
+      "projectType": "library",
+      "root": "libs/web/album/ui/album-track",
+      "sourceRoot": "libs/web/album/ui/album-track/src",
+      "prefix": "as",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/web/album/ui/album-track/src/**/*.ts",
+              "libs/web/album/ui/album-track/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/web/album/ui/album-track"],
+          "options": {
+            "jestConfig": "libs/web/album/ui/album-track/jest.config.js",
             "passWithNoTests": true
           }
         }
