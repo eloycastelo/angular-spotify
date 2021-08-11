@@ -1,15 +1,12 @@
 import { GenericState } from '@angular-spotify/web/shared/data-access/models';
-import {
-  AlbumApiService,
-  PlayerApiService
-} from '@angular-spotify/web/shared/data-access/spotify-api';
+import { AlbumApiService, PlayerApiService } from '@angular-spotify/web/shared/data-access/spotify-api';
 import { PlaybackStore } from '@angular-spotify/web/shared/data-access/store';
 import { RouterUtil, SelectorUtil } from '@angular-spotify/web/shared/utils';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { combineLatest, Observable, of } from 'rxjs';
-import { filter, map, mergeMap, pluck, switchMap, tap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, pluck, switchMap, tap } from 'rxjs/operators';
 
 interface AlbumState extends GenericState<SpotifyApi.AlbumObjectFull> {
   albumId: string;
@@ -46,8 +43,8 @@ export class AlbumStore extends ComponentStore<AlbumState> {
           error: null
         });
       }),
-      mergeMap(({ albumId }) =>
-        this.albumApi.getById(albumId).pipe(
+      switchMap(({ albumId }) =>
+        this.albumApi.getAlbum(albumId).pipe(
           tapResponse(
             (album) => {
               this.patchState({
@@ -59,7 +56,7 @@ export class AlbumStore extends ComponentStore<AlbumState> {
             (error) => {
               this.patchState({
                 status: 'error',
-                error: error as string
+                error: error as unknown as string
               });
             }
           )

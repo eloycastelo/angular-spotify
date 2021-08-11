@@ -1,6 +1,10 @@
 # Angular Spotify
 
-A simple Spotify client built with Angular 11, Nx workspace, ngrx, TailwindCSS and ng-zorro.
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/trungk18/angular-spotify)
+
+A simple Spotify client built with Angular 12, Nx workspace, ngrx, TailwindCSS and ng-zorro.
+
+> I have recently shared about #angularspotify at [AngularAir](https://angularair.com), you can watch the session here 👉 [youtu.be/uPB0KHKlrU8][02-air]
 
 ## Working application
 
@@ -16,6 +20,8 @@ Check out the **live application** -> https://spotify.trungk18.com
 
 ![Angular Spotify Blurry Background][album-art]
 
+![Angular Spotify PWA][pwa]
+
 ![Angular Spotify Web Player][web-player]
 
 ## Support
@@ -28,28 +34,28 @@ If you like my work, feel free to:
 
 Thanks a bunch for stopping by and supporting me!
 
-[tweet]: https://twitter.com/intent/tweet?url=https://github.com/trungk18/angular-spotify&text=A%20cool%20Spotify%20client%20made%20with%20Angular%2011,%20Nx%20workspace,%20ngrx,%20TailwindCSS%20and%20ng-zorro%20%40tuantrungvo&hashtags=angularspotify,angular,nx,ngrx,ngzorro,typescript
+[tweet]: https://twitter.com/intent/tweet?url=https://github.com/trungk18/angular-spotify&text=A%20cool%20Spotify%20client%20made%20with%20Angular%2012,%20Nx%20workspace,%20ngrx,%20TailwindCSS%20and%20ng-zorro%20%40tuantrungvo&hashtags=angularspotify,angular,nx,ngrx,ngzorro,typescript
 
 ## Who is it for 🤷‍♀️
 
 I still remember Window Media Player on windows has the visualization when you start to play the music, and I wanted to have the same experience when listening to Spotify. That is the reason I started this project.
 
-I found that there weren't many resources on building a proper real-world scale application, and that's my focus for sharing. I made a [Jira clone application][jira] as the first one for that purpose. [Nx workspace][nx] is getting more and more attention from the Angular community, but people are always confused about how to architect and set up a Nx project. I hope Angular Spotify will give you more insight on that despite the fact that it is my first project using Nx 🤣
+I found that there weren't many resources on building a proper real-world scale application, and that's my focus for sharing. I made a [Jira clone application][jira] as the first one for that purpose. [Nx workspace][nx] is getting more and more attention from the Angular community, but people are always confused about how to architect and set up an Nx project. I hope Angular Spotify will give you more insight on that even though it is my first project using Nx 🤣
 
 ---
 
-You know I am one of the moderators of [Angular Vietnam][angularvn]. Recently, I also started [Angular Singapore][angularsg]. This piece of work is my another long-term plan to bring Angular knowledge to more people. I desire to advocate and grow the Angular developer community in Singapore and Vietnam :)
+You know I am one of the moderators of [Angular Vietnam][angularvn]. Recently, I also started [Angular Singapore][angularsg]. This piece of work is my other long-term plan to bring Angular knowledge to more people. I desire to advocate and grow the Angular developer community in Singapore and Vietnam :)
 
 ## Tech stack
 
 ![Tech logos][stack]
 
-- [Angular 11][angular]
+- [Angular 12][angular]
 - [Nx Workspace][nx]
 - [ngneat][] packages includes: `ngneat/svg-icon` and `ngneat/until-destroy`
 - [ngrx][ngrx] and [ngrx/component-store][component-store]
 - [ng-zorro][ng-zorro] UI component: `tooltip`, `modal`, `slider`, `switch` and more.
-- [TailwindCSS][tailwind]
+- [TailwindCSS][tailwind] - See this video [Everything you need to know about TailwindCSS and Angular applications](https://youtu.be/zSXdJqEPy9w) by [@nartc][nartc] for integration TailwindCSS with Angular
 - [Netlify][netlify] for deployment
 
 [angular]: https://angular.io/
@@ -60,7 +66,7 @@ You know I am one of the moderators of [Angular Vietnam][angularvn]. Recently, I
 [netlify]: http://netlify.com/
 [ngneat]: https://github.com/ngneat
 
-I experimented with the ngrx/component store for `AuthStore` and `UIStore`. It might not be a best practice and I will refactor it very soon. Just FYI 🤣
+I experimented with the ngrx/component store for `AuthStore` and `UIStore`. It might not be a best practice, and I will refactor it very soon. Just FYI 🤣
 
 ## High-level design
 
@@ -89,6 +95,9 @@ I followed the structure recommended by my friend [@nartc][nartc]. Below is the 
             │   ├── feature (angular:lib) - for configure any forRoot modules
             │   └── ui
             │       └── layout (angular:lib)
+            ├── settings (dir)
+            │   ├── feature (angular:lib) - for configure and persist all settings
+            │   └── data-access (workspace:lib) - store and services for settings module
             ├── playlist (dir)
             │   ├── data-access (angular:lib, service, state management)
             │   ├── features
@@ -118,7 +127,7 @@ I followed the structure recommended by my friend [@nartc][nartc]. Below is the 
 
 ### Authentication Flow
 
-I follow `Implicit Grant Flow` that Spotify recommended for client-side only application and does not involve secret keys. The access tokens that are issued are short-lived, and there are no refresh tokens to extend them when they expire.
+I follow `Implicit Grant Flow` that Spotify recommended for client-side only applications and did not involve secret keys. The issued access tokens are short-lived, and there are no refresh tokens to extend them when they expire.
 
 View the [Spotify Authorization Guide](https://developer.spotify.com/documentation/general/guides/authorization-guide/)
 
@@ -136,13 +145,13 @@ Nx provides an [dependency graph][dep-graph-nx] out of the box. To view it on yo
 npm run dep-graph
 ```
 
-A simplified graph looks like the following. It gives you insightful information for your mono repo and especially helpful when multiple projects are depending on each other.
+A simplified graph looks like the following. It gives you insightful information for your mono repo and is especially helpful when multiple projects depend on each other.
 
 ![Angular Spotify Dependency Graph][dep-graph]
 
 ### Nx Computation Cache
 
-Having Nx Cloud configured shorten the deployment time quite a lot.
+Having Nx Cloud configured shortens the deployment time quite a lot.
 
 Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly. Visit [Nx Cloud](https://nx.app/) to learn more.
 
@@ -150,13 +159,13 @@ Nx Cloud pairs with Nx in order to enable you to build and test code more rapidl
 
 ## Features and Roadmap
 
-I set the tentative deadline for motivating myself to finish the work on time. Otherwise, It will take forever to complete :)
+I set a tentative deadline for motivating myself to finish the work on time. Otherwise, It will take forever to complete :)
 
 ### 1.0 - Simple Spotify client
 
 > March 01 - 28, 2021
 
-- [x] Proven, scalable, and easy to understand structure with Nx workspace
+- [x] Proven, scalable, and easy to understand the structure with Nx workspace
 - [x] Play music using Spotify SDK
 - [x] Load a maximum of 50 save playlists and top 100 songs per playlist.
 - [x] Cool visualization
@@ -173,11 +182,12 @@ I scheduled a few live stream sessions to show you how I continue developing Ang
 | 2   | Sat, 10th April 2021, 10AM | [Build the album list page][live-02]                            |
 | 3   | Sat, 17th April 2021, 10AM | [Build the album detail page - part 1][live-03]                 |
 | 4   | Sat, 24th April 2021, 10AM | [Build the album detail page - part 2][live-04]                 |
-| 5   | Sat, 24th April 2021, 10AM | [Build the artist detail page - part 1][live-05]                |
-| 6   | Sat, 24th April 2021, 10AM | [Build the artist detail page - part 2][live-06]                |
-| 7   | Sat, 1st May 2021, 10AM    | [Build the track list page][live-07]                            |
-| 8   | TBD                        | Setup i18n and support new language                             |
-| 9   | TBD                        | Config Nx build:affected with Github action                     |
+| 5   | Sat, 8th May 2021, 10AM    | [Build the artist detail page - part 1][live-05]                |
+| 6   | Sat, 15th May 2021, 10AM   | [Build the artist detail page - part 2][live-06]                |
+| 7   | Sat, 12th Jun 2021, 10AM   | [Build the track list page - part 1][live-07]                   |
+| 8   | Sat, 19th Jun 2021, 10AM   | [Build the track list page - part 2][live-08]                   |
+| 9   | Sun, 11th July 2021, 10AM  | [NgRx Component Store Unit Testing][live-09]                    |
+| 10  | TBD                        | Config Nx build:affected with Github action                     |
 
 I will also do some refactoring with [@nartc][nartc] for Angular Vietnam Office Hours. More detail is coming soon.
 
@@ -188,18 +198,24 @@ I will also do some refactoring with [@nartc][nartc] for Angular Vietnam Office 
 [live-05]: https://youtu.be/fNhdd-O5c9c
 [live-06]: https://youtu.be/Tt51-pxm6Ko
 [live-07]: https://youtu.be/Oj4yomnxfj4
+[live-08]: https://youtu.be/1h5KKFSj9Es
+[live-09]: https://youtu.be/owwRjxm0zs0
 
 ## Community
 
-I have received some invitation to talk about Angular Spotify from the community. You can watch my talks below 🙂
+I have received some invitations to talk about Angular Spotify from the community. You can watch my talks below 🙂
 
 [![BLS033](https://pbs.twimg.com/media/EzWVmV3UYAgjgY-?format=jpg&name=small)][01-beeman]
 
-| #   | Time                 | Description/Link                               |
-| --- | -------------------- | ---------------------------------------------- |
-| 1   | Wed, 21st April 2021 | [BLS SHOW & TELL - Angular Spotify][01-beeman] |
+[![AngularAir](https://pbs.twimg.com/media/E0zEECXXMAQNpsA?format=jpg&name=medium)][02-air]
+
+| #   | Time                 | Description/Link                                   |
+| --- | -------------------- | -------------------------------------------------- |
+| 1   | Wed, 21st April 2021 | [BLS SHOW & TELL - Angular Spotify][01-beeman]     |
+| 2   | Fri, 08th May 2021   | [AngularAir - Another 1k stars repository][02-air] |
 
 [01-beeman]: https://youtu.be/9zJcb6ZhBaI
+[02-air]: https://youtu.be/uPB0KHKlrU8
 
 ## Time spending
 
@@ -207,7 +223,7 @@ It is a side project that I only spent time outside of the office hours to work 
 
 I couldn't get the full-time report from waka time because it only shows me the latest two weeks. 🤣
 
-I have spent approximately 50 hours working on this project, which is almost the same amount that I worked on the first version of [jira.trungk18.com][jira].
+I have spent approximately 50 hours working on this project, which is almost the same amount as the first version of [jira.trungk18.com][jira].
 
 The visualizer was the most exciting feature, and I decided to start this project because of that single component.
 
@@ -230,7 +246,7 @@ I skipped writing test for this project.
 
 ## Compatibility
 
-Web Playback SDK provided supports for Chrome, Firefox, Edge, IE 11, or above running on Mac/Windows/Linux.
+Web Playback SDK supports Chrome, Firefox, Edge, IE 11, or above running on Mac/Windows/Linux.
 
 It **doesn't support** Safari or any mobile browser on **Android** or **iOS**
 
@@ -288,5 +304,6 @@ Feel free to use my code on your project. Please put a reference to this reposit
 [visualizer]: /libs/web/shared/assets/src/assets/readme/angular-spotify-visualization.gif
 [angular-spotify-browse]: /libs/web/shared/assets/src/assets/readme/angular-spotify-browse.gif
 [album-art]: /libs/web/shared/assets/src/assets/readme/angular-spotify-album-art.gif
+[pwa]: /libs/web/shared/assets/src/assets/readme/angular-spotify-pwa.gif
 [web-player]: /libs/web/shared/assets/src/assets/readme/angular-spotify-web-player.png
 [nx-cloud]: /libs/web/shared/assets/src/assets/readme/nx-cloud.png

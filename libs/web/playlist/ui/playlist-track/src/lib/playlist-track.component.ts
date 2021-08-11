@@ -16,22 +16,23 @@ import { combineLatest, Observable, of } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistTrackComponent implements OnInit {
-  get item(): SpotifyApi.PlaylistTrackObject | undefined {
+  get item(): SpotifyApi.PlaylistTrackObject {
     return this._item;
   }
 
   @Input()
-  set item(value: SpotifyApi.PlaylistTrackObject | undefined) {
+  set item(value: SpotifyApi.PlaylistTrackObject) {
     this._item = value;
     if (value?.track) {
       this.albumRouteUrl = RouteUtil.getAlbumRouteUrl(value.track.album.id);
     }
   }
-
-  private _item: SpotifyApi.PlaylistTrackObject | undefined;
+  
+  private _item!: SpotifyApi.PlaylistTrackObject;
 
   @Input() index!: number;
-  @Input() contextUri!: string | null;
+  @Input() contextUri!: string | null | undefined;
+  @Input() type: 'PLAYLIST' | 'LIKE_SONGS' = 'PLAYLIST';
 
   isTrackPlaying$!: Observable<boolean>;
   albumRouteUrl?: string;
@@ -53,7 +54,7 @@ export class PlaylistTrackComponent implements OnInit {
       .togglePlay(isPlaying, {
         context_uri: this.contextUri,
         offset: {
-          position: this.index
+          position: this.type === 'PLAYLIST' ? this.index : this.item.track.track_number - 1
         }
       })
       .subscribe(); //TODO: Refactor with component store live stream
